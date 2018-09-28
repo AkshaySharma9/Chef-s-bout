@@ -5,7 +5,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-		
+
 		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
@@ -16,6 +16,11 @@
 	<body>
 		<div class="container dad" style="width: 100%; padding: 0;">
 			<button type="button" class="btn btn-primary" id="login">login</button>
+			{% if session.user_id %}
+			<H1> Logged in {{ session.user_id }} ||| </H1>
+			{% else %}
+			<h2> not logged in </h2>
+			{% endif %}
 		</div>
 	</body>
 </html>
