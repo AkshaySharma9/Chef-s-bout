@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+
+body {
+    font-family: 'Raleway', sans-serif;
+}
+
+.intro {
+
+}
+
+.uname {
+
+}
+
+.navbar-brand {
+    font-family: 'Pacifico', cursive !important;
+}

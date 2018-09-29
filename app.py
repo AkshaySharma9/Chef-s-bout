@@ -24,7 +24,6 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 @app.route("/")
-@login_required
 def index():
 	""" Show logged in user the welcome page """
 
@@ -35,32 +34,33 @@ def login():
 	"""Log user in."""
 
     # forget any user_id
-
-    #session.clear()
+	session.clear()
 
 	# to get the access token if authorization code is present
 	if "code" in request.args:
 		authorization_code = request.args.get("code")
 
 		# making the curl request
-		json = '{"grant_type": "authorization_code","code": "' + authorization_code + '","client_id":"' + client_id + '","client_secret":"' + client_secret + '","redirect_uri":"' + redirect_uri + '"}'
+		json = '{"grant_type": "authorization_code","code": "' + authorization_code + '","client_id":"' + config['client_id'] + '","client_secret":"' + config['client_secret'] + '","redirect_uri":"' + config['redirect_uri'] + '"}'
 
 		headers = {'content-Type': 'application/json'}
 
 		response = (requests.post("https://api.codechef.com/oauth/token", data=json, headers=headers).json())['result']['data']
 
 		# updating the tokens
-		access_token = response['access_token']
-		refresh_token = response['refresh_token']
+		config['access_token'] = response['access_token']
+		config['refresh_token'] = response['refresh_token']
 
 		# getting the name of user and saving it
-		session["user_id"] = get_user_details(response['access_token'])['content']['username']
+		user_details = get_user_details()
+		session["user_id"] = user_details['content']['username']
+		session["uname"] = user_details['content']['fullname'].split()[0]
 
 		return redirect(url_for("index"))
 
 	# get the authorization code first
 	else:
-		url = 'https://api.codechef.com/oauth/authorize?response_type=code&client_id=' + client_id + '&redirect_uri=' + redirect_uri +'&state=xyz'
+		url = 'https://api.codechef.com/oauth/authorize?response_type=code&client_id=' + config['client_id'] + '&redirect_uri=' + config['redirect_uri'] +'&state=xyz'
 
 	    # redirect to codechef login page
 		return redirect(url)

@@ -1,26 +1,22 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
 
-<html>
-	<head>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+{% block title %}
+    Chef's Bout
+{% endblock %}
 
-		<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-
-		<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-        <title>Chef's Bout</title>
-	</head>
-
-	<body>
-		<div class="container dad" style="width: 100%; padding: 0;">
-			<button type="button" class="btn btn-primary" id="login">login</button>
+{% block main %}
+	<h1 class="uname"> Welcome Aboard,
 			{% if session.user_id %}
-			<H1> Logged in {{ session.user_id }} ||| </H1>
+			 {{ session.uname }}
 			{% else %}
-			<h2> not logged in </h2>
+			 Guest
 			{% endif %}
-		</div>
-	</body>
-</html>
+	!</h1><br>
+	<p class="text-lg-center intro">Practise problem in a new way and utilize time more effectively <br> We help you to choose problems based on tags and set time
+	limit to solve them. To Continue </p>
+	{% if session.user_id %}
+		<input type="button" class="btn btn-outline-dark btn-lg" onclick="location.href = '/';" role="start" value='Start Practising'>
+	{% else %}
+		<input type="button" class="btn btn-outline-dark btn-lg" onclick="location.href = '/login';" role="login" value='Login with Codehcef'>
+	{% endif %}
+{% endblock %}
